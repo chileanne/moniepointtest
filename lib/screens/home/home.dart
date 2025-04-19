@@ -19,6 +19,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
  final AppTextStyle _textStyle = AppTextStyle.instance;
+ final ScrollController _scrollController = ScrollController();
+ bool _isFabButtonVisible = false;
+ bool _isTextOneVisible = false;
+ bool _isShapeVisible = false;
+ double _lastOffset = 0;
+
  final List<String> imageUrls = [
    "rs1", // Full-width image
    'rs2',
@@ -28,6 +34,50 @@ class _HomeScreenState extends State<HomeScreen> {
    'rs5',
    'rs6'
  ];
+
+
+ @override
+ void initState() {
+   super.initState();
+   _scrollController.addListener(_onScroll);
+ }
+
+ void _onScroll() {
+   double currentOffset = _scrollController.offset;
+
+   print(currentOffset);
+
+
+   ///shape animation
+   if (currentOffset >= 1.8 && !_isShapeVisible) {
+     // scrolling down
+     setState(() => _isShapeVisible = true);
+   }else if  (currentOffset <= 0.2 && _isShapeVisible){
+     // scrolling up
+     setState(() => _isShapeVisible = false);
+   }
+
+
+   ///Intro text animation
+   if (currentOffset >= 1.2 && !_isTextOneVisible) {
+     // scrolling down
+     setState(() => _isTextOneVisible = true);
+   }else if  (currentOffset <= 0.2 && _isTextOneVisible){
+     // scrolling up
+     setState(() => _isTextOneVisible = false);
+   }
+
+
+
+   if (currentOffset > _lastOffset && _isFabButtonVisible) {
+     // scrolling down
+     setState(() => _isFabButtonVisible = false);
+   } else if (currentOffset < _lastOffset && !_isFabButtonVisible) {
+     // scrolling up
+     setState(() => _isFabButtonVisible = true);
+   }
+   _lastOffset = currentOffset;
+ }
 
 
   @override
@@ -42,24 +92,29 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-      floatingActionButton: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          width: 240,
-          decoration: BoxDecoration(
-            color: color1.withOpacity(0.8),
-            borderRadius: BorderRadius.circular(22.0)
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FabWidget(icon:Icons.search,showCircle: false),
-              FabWidget(icon: Icons.message,showCircle: false),
-              FabWidget(icon:Icons.home,showCircle: true),
-              FabWidget(icon: Icons.favorite,showCircle: false),
-              FabWidget(icon:Icons.person,showCircle: false),
+      floatingActionButton: AnimatedSlide(
+        offset: _isFabButtonVisible ? Offset.zero : const Offset(1.5, 0),
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            width: 240,
+            decoration: BoxDecoration(
+              color: color1.withOpacity(0.8),
+              borderRadius: BorderRadius.circular(22.0)
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FabWidget(icon:Icons.search,showCircle: false),
+                FabWidget(icon: Icons.message,showCircle: false),
+                FabWidget(icon:Icons.home,showCircle: true),
+                FabWidget(icon: Icons.favorite,showCircle: false),
+                FabWidget(icon:Icons.person,showCircle: false),
 
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -67,6 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SafeArea(
           bottom: false,
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -107,13 +163,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 /// text content
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Hi, Marina",style: _textStyle.titleSmall,),
-                      Text("let's select your",style: _textStyle.titleMedium,),
-                      Text("perfect place",style: _textStyle.titleMedium),
-                    ],
+                  child: AnimatedOpacity(
+                    duration: const Duration(milliseconds: 500),
+                    opacity: _isTextOneVisible ? 1.0 : 0.0,
+                    curve: Curves.easeIn,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Hi, Marina",style: _textStyle.titleSmall,),
+                        Text("let's select your",style: _textStyle.titleMedium,),
+                        Text("perfect place",style: _textStyle.titleMedium),
+                      ],
+                    ),
                   ),
                 ),
 
@@ -123,63 +184,68 @@ class _HomeScreenState extends State<HomeScreen> {
                 ///circle and rectangle shapes
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    children: [
+                  child: AnimatedSlide(
+                    offset: _isShapeVisible ? Offset.zero : const Offset(1.5, 0),
+                    duration: const Duration(milliseconds: 800),
+                    curve: Curves.easeInOut,
+                    child: Row(
+                      children: [
 
-                      Container(
-                        width: 200,
-                        height: 200,
-                        decoration: const BoxDecoration(
-                          color: color4,
-                          shape: BoxShape.circle,
+                        Container(
+                          width: 200,
+                          height: 200,
+                          decoration: const BoxDecoration(
+                            color: color4,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Column(
+                            children: [
+                              Gap(30),
+                              Text('BUY',
+                                style: GoogleFonts.roboto(
+                                fontSize: 18.0, fontWeight: FontWeight.w600,color: color5),),
+
+                              Gap(30),
+
+                              Text("1234", style: GoogleFonts.roboto(
+                                  fontSize: 34.0, fontWeight: FontWeight.w800,color: color5)),
+
+                              Text('offers',style: GoogleFonts.roboto(
+                                  fontSize: 16.0, fontWeight: FontWeight.w600,color: color5)),
+                            ],
+                          ),
                         ),
-                        child: Column(
-                          children: [
-                            Gap(30),
-                            Text('BUY',
-                              style: GoogleFonts.roboto(
-                              fontSize: 18.0, fontWeight: FontWeight.w600,color: color5),),
 
-                            Gap(30),
+                        Gap(8.0),
 
-                            Text("1234", style: GoogleFonts.roboto(
-                                fontSize: 34.0, fontWeight: FontWeight.w800,color: color5)),
+                        Container(
+                          width: 200,
+                          height: 200,
+                          decoration:BoxDecoration(
+                            color: color5,
+                            borderRadius: BorderRadius.circular(18.0)
+                          ),
+                          child: Column(
+                            children: [
+                              Gap(30),
+                              Text('RENT',style: GoogleFonts.roboto(
+                                  fontSize: 18.0, fontWeight: FontWeight.w600,color: color2)),
 
-                            Text('offers',style: GoogleFonts.roboto(
-                                fontSize: 16.0, fontWeight: FontWeight.w600,color: color5)),
-                          ],
+                              Gap(30),
+
+                              Text("2212",style: GoogleFonts.roboto(
+                                  fontSize: 34.0, fontWeight: FontWeight.w800,color: color2)),
+
+                              Text('offers',style: GoogleFonts.roboto(
+                                  fontSize: 16.0, fontWeight: FontWeight.w600,color: color2)),
+                            ],
+                          ),
                         ),
-                      ),
-
-                      Gap(8.0),
-
-                      Container(
-                        width: 200,
-                        height: 200,
-                        decoration:BoxDecoration(
-                          color: color5,
-                          borderRadius: BorderRadius.circular(18.0)
-                        ),
-                        child: Column(
-                          children: [
-                            Gap(30),
-                            Text('RENT',style: GoogleFonts.roboto(
-                                fontSize: 18.0, fontWeight: FontWeight.w600,color: color2)),
-
-                            Gap(30),
-
-                            Text("2212",style: GoogleFonts.roboto(
-                                fontSize: 34.0, fontWeight: FontWeight.w800,color: color2)),
-
-                            Text('offers',style: GoogleFonts.roboto(
-                                fontSize: 16.0, fontWeight: FontWeight.w600,color: color2)),
-                          ],
-                        ),
-                      ),
 
 
 
-                    ],
+                      ],
+                    ),
                   ),
                 ),
 

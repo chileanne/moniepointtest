@@ -1,8 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moniepointtest/core/constants/colors.dart';
+import 'package:moniepointtest/core/controller/appcontroller.dart';
 import 'package:moniepointtest/core/utils/AsssetsUtils.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:moniepointtest/screens/home/widgets/countingtextanimation.dart';
@@ -19,11 +22,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final AppController controller =Get.find();
  final AppTextStyle _textStyle = AppTextStyle.instance;
  final ScrollController _scrollController = ScrollController();
  bool _isFabButtonVisible = false;
  bool _isTextOneVisible = false;
- bool _isTextTwoVisible = false;
+
 
  double _lastOffset = 0;
 
@@ -133,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Obx(()=>Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [color5, color4],
@@ -158,11 +162,15 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FabWidget(icon:Icons.search,showCircle: false),
-                FabWidget(icon: Icons.message,showCircle: false),
-                FabWidget(icon:Icons.home,showCircle: true),
-                FabWidget(icon: Icons.favorite,showCircle: false),
-                FabWidget(icon:Icons.person,showCircle: false),
+                FabWidget(icon:Icons.search,showCircle: controller.oncurrentScreen.value==1?true:false,ontap:(){
+                  controller.oncurrentScreen.value=1;
+                }),
+                FabWidget(icon: Icons.message,showCircle: false,ontap:(){}),
+                FabWidget(icon:Icons.home,showCircle: controller.oncurrentScreen.value==0?true:false,ontap:(){
+                  controller.oncurrentScreen.value=0;
+                }),
+                FabWidget(icon: Icons.favorite,showCircle: false,ontap:(){}),
+                FabWidget(icon:Icons.person,showCircle: false,ontap:(){}),
 
               ],
             ),
@@ -360,7 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             AnimatedSlide(
               offset: _showBottom ? Offset(0, 0) : Offset(0, 1),
-              duration: Duration(milliseconds: 400),
+              duration: Duration(milliseconds: 800),
               child: Container(
                 decoration: BoxDecoration(
                   color: color5,
@@ -424,7 +432,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 
 

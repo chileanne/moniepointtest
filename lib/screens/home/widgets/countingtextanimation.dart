@@ -11,7 +11,7 @@ class CountingTextAnimation extends StatelessWidget {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<int>(
       tween: IntTween(begin: 0, end: targetNumber),
-      duration: Duration(seconds: 5),
+      duration: Duration(seconds: 7),
       builder: (context, value, child) {
         return Text(
           '$value',

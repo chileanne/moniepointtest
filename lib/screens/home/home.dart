@@ -234,22 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Gap(18),
 
                 /// text content
-                // Padding(
-                //   padding: const EdgeInsets.all(12.0),
-                //   child: AnimatedOpacity(
-                //     duration: const Duration(milliseconds: 500),
-                //     opacity: _isTextOneVisible ? 1.0 : 0.0,
-                //     curve: Curves.easeIn,
-                //     child: Column(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Text("Hi, Marina",style: _textStyle.titleSmall,),
-                //         Text("let's select your",style: _textStyle.titleMedium,),
-                //         Text("perfect place",style: _textStyle.titleMedium),
-                //       ],
-                //     ),
-                //   ),
-                // ),
+
 
                 Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -316,8 +301,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   style:  GoogleFonts.roboto(
                                       fontSize: 34.0, fontWeight: FontWeight.w800,color: color5), ),
 
-                              // Text("1234", style: GoogleFonts.roboto(
-                              //     fontSize: 34.0, fontWeight: FontWeight.w800,color: color5)),
 
                               Text('offers',style: GoogleFonts.roboto(
                                   fontSize: 16.0, fontWeight: FontWeight.w600,color: color5)),

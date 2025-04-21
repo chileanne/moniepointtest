@@ -296,8 +296,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
 
                         Container(
-                          width: 200,
-                          height: 200,
+                          width: 180,
+                          height: 180,
                           decoration: const BoxDecoration(
                             color: color4,
                             shape: BoxShape.circle,
@@ -328,8 +328,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Gap(8.0),
 
                         Container(
-                          width: 200,
-                          height: 200,
+                          width: 180,
+                          height: 180,
                           decoration:BoxDecoration(
                             color: color5,
                             borderRadius: BorderRadius.circular(18.0)

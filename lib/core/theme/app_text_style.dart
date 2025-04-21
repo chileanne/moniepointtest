@@ -6,7 +6,7 @@ import 'package:moniepointtest/core/constants/colors.dart';
 class AppTextStyle {
   static AppTextStyle instance = AppTextStyle();
 
-  TextStyle appBarTile = GoogleFonts.roboto(fontSize: 14.0, fontWeight: FontWeight.w400,);
+  TextStyle appBarTile = GoogleFonts.inter(fontSize: 14.0, fontWeight: FontWeight.w400,);
 
  TextStyle titleLarge = GoogleFonts.inter(fontSize: 18.0, fontWeight: FontWeight.w400,);
 

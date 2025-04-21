@@ -34,7 +34,7 @@ class ImageTitleWidget extends StatelessWidget {
           duration: Duration(milliseconds: 900),
           curve: Curves.easeIn,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(4.0),
             child: Container(
               decoration: BoxDecoration(
                 color: color6.withOpacity(0.60),
@@ -90,54 +90,7 @@ class ImageTitleWidget extends StatelessWidget {
           ),
         )
 
-        /*  AnimatedPositioned(
-            left: 0,
-            right: visible? 0 :size.width,
-            top: size.width * 0.34 ,
-           // bottom:  size.width * 0.4 ,
 
-            duration: Duration(milliseconds: 800),
-            curve: Curves.easeIn,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-            // width: visible? 200.0 : 30.0,
-                decoration: BoxDecoration(
-                  color: color6.withOpacity(0.60),
-                  borderRadius: BorderRadius.circular(18.0)
-                ),
-              // duration: Duration(milliseconds: 500),
-              //   curve: Curves.easeIn,
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                   // mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                   //   Gap(size.width * 0.4),
-                      Text("Gladokova st..,25",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(fontSize: 16.0,
-                          fontWeight: FontWeight.w600),),
-
-
-                      Container(
-                        decoration: const BoxDecoration(
-                          color: color4,
-                          shape: BoxShape.circle,
-                        ),
-                        child:Padding(
-                          padding: const EdgeInsets.all(14.0),
-                          child: Icon(Icons.arrow_forward_ios,size: 10,),
-                        ) ,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
-
-        )*/
       ],
     );
   }
